@@ -1,4 +1,8 @@
 export default {
+  'pages.new': 'New',
+  'pages.update': 'Update',
+  'pages.search': 'Search',
+  'pages.delete': 'Delete',
   'pages.layouts.userLayout.title':
     'Ant Design is the most influential web design specification in Xihu district',
   'pages.login.accountLogin.tab': 'Account Login',
