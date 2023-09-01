@@ -2,6 +2,13 @@
 /* eslint-disable */
 
 declare namespace API {
+  type ApiResponse = {
+    success: boolean;
+    data: any;
+    code?: number;
+    msg?: string;
+    showType?: string;
+  };
   type CurrentUser = {
     name?: string;
     avatar?: string;
@@ -32,6 +39,13 @@ declare namespace API {
   type PageParams = {
     current?: number;
     pageSize?: number;
+  };
+
+  type PageVO = {
+    data?: RuleListItem[];
+    /** 列表的内容总数 */
+    total?: number;
+    success?: boolean;
   };
 
   type RuleListItem = {
