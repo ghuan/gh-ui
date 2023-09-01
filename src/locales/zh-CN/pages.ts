@@ -1,4 +1,8 @@
 export default {
+  'pages.new': '新增',
+  'pages.update': '修改',
+  'pages.search': '查询',
+  'pages.delete': '删除',
   'pages.layouts.userLayout.title': 'Ant Design 是西湖区最具影响力的 Web 设计规范',
   'pages.login.accountLogin.tab': '账户密码登录',
   'pages.login.accountLogin.errorMessage': '错误的用户名和密码(admin/ant.design)',
