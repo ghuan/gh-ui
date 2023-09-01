@@ -1,14 +1,7 @@
 import Footer from '@/components/Footer';
 import { Layout, Button } from 'antd';
-import { login } from '@/services/ant-design-pro/api';
-import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 import {
   DeploymentUnitOutlined,
-  LockOutlined,
-  MobileOutlined,
-  TaobaoCircleOutlined,
-  UserOutlined,
-  WeiboCircleOutlined,
 } from '@ant-design/icons';
 import {
   PageContainer,
@@ -56,7 +49,24 @@ const Lang = () => {
 };
 
 const Confirm: React.FC = () => {
-
+  const getURLParamValue = (paramName:string) => {
+    let url = window.location.href;
+    url = decodeURI(url);
+    var paramValue = "", isFound = !1;
+    if(url.indexOf("?") >= 0){
+      url = "?"+url.split('?')[1];
+      
+      if (url.indexOf("?") == 0 && url.indexOf("=") > 1) {
+        var arrSource = unescape(url).substring(1, url.length).split("&"), i = 0;
+        while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
+      }
+    }
+      return paramValue;
+  }
+  const clientId = getURLParamValue('client_id');
+  const scope = getURLParamValue('scope');
+  const state = getURLParamValue('state');
+  
   return (
     <Layout>
     <Lang />
