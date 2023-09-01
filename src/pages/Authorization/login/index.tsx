@@ -56,7 +56,7 @@ const LoginMessage: React.FC<{
 
 const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
-  const [type, setType] = useState<string>('account');
+  const [type, setType] = useState<string>(localStorage.getItem('form_login_type') === 'phone' ? 'mobile' : 'account');
   const intl = useIntl();
 
   const getURLParamValue = (paramName:string) => {
@@ -93,12 +93,16 @@ const Login: React.FC = () => {
   const handleSubmit = async (values: API.LoginParams) => {
     // 登录
     let grant_type = type === 'mobile' ? 'phone' : 'password';
+    localStorage.setItem("form_login_type", grant_type);
     if(grant_type === 'phone'){
+      localStorage.setItem("form_login_phone", values.mobile);
       document.getElementById('form_phone').value = values.mobile;
       document.getElementById('smsFormSubmit')?.click();
     }else {
       document.getElementById('form_username').value = values.username;
       document.getElementById('form_password').value = values.password;
+      localStorage.setItem("form_login_username", values.username);
+      localStorage.setItem("form_login_password", values.password);
       document.getElementById('passwordFormSubmit')?.click();
     }
   };
@@ -170,6 +174,7 @@ const Login: React.FC = () => {
             <>
               <ProFormText
                 name="username"
+                initialValue={(localStorage.getItem('form_login_type') === 'password' && localStorage.getItem("form_login_username")) || ''}
                 fieldProps={{
                   size: 'large',
                   prefix: <UserOutlined />,
@@ -192,6 +197,7 @@ const Login: React.FC = () => {
               />
               <ProFormText.Password
                 name="password"
+                initialValue={(localStorage.getItem('form_login_type') === 'password' && localStorage.getItem("form_login_password")) || ''}
                 fieldProps={{
                   size: 'large',
                   prefix: <LockOutlined />,
@@ -223,6 +229,7 @@ const Login: React.FC = () => {
                   size: 'large',
                   prefix: <MobileOutlined />,
                 }}
+                initialValue={(localStorage.getItem('form_login_type') === 'phone' && localStorage.getItem("form_login_phone")) || ''}
                 name="mobile"
                 placeholder={intl.formatMessage({
                   id: 'pages.login.phoneNumber.placeholder',
