@@ -1,5 +1,7 @@
 import Footer from '@/components/Footer';
 import { Layout, Button } from 'antd';
+import { checkConfirm } from '../api';
+
 import {
   DeploymentUnitOutlined,
 } from '@ant-design/icons';
@@ -66,7 +68,8 @@ const Confirm: React.FC = () => {
   const clientId = getURLParamValue('client_id');
   const scope = getURLParamValue('scope');
   const state = getURLParamValue('state');
-  
+  const rs =  checkConfirm();
+  console.log(rs);
   return (
     <Layout>
     <Lang />
