@@ -96,6 +96,10 @@ export default {
       },
     });
   },
+  'GET /api/user/getMenuData': (req: Request, res: Response) => {
+    
+    res.send([]);
+  },
   // GET POST 可省略
   'GET /api/users': [
     {

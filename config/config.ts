@@ -13,6 +13,7 @@ export default defineConfig({
    * @description 让 build 之后的产物包含 hash 后缀。通常用于增量发布和避免浏览器加载缓存。
    * @doc https://umijs.org/docs/api/config#hash
    */
+  history: { type: 'hash' }, // 默认是 browser
   hash: true,
 
   /**
@@ -76,7 +77,7 @@ export default defineConfig({
    * @name layout 插件
    * @doc https://umijs.org/docs/max/layout-menu
    */
-  title: 'Ant Design Pro',
+  title: 'gh-framework',
   layout: {
     locale: true,
     ...defaultSettings,
@@ -106,7 +107,10 @@ export default defineConfig({
    * @description 内置了 babel import 插件
    * @doc https://umijs.org/docs/max/antd#antd
    */
-  antd: {},
+  antd: {
+    configProvider: {},
+    appConfig: {},
+  },
   /**
    * @name 网络请求配置
    * @description 它基于 axios 和 ahooks 的 useRequest 提供了一套统一的网络请求和错误处理方案。
@@ -152,4 +156,9 @@ export default defineConfig({
     strategy: 'normal',
   },
   requestRecord: {},
+  //开启多页签
+  keepalive: [/./],
+  tabsLayout: {
+  hasCustomTabs:true
+  },
 });

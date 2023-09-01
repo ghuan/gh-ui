@@ -1,12 +1,21 @@
 // @ts-ignore
 /* eslint-disable */
 import { request } from '@umijs/max';
+import type { MenuDataItem } from '@ant-design/pro-components';
 
 /** 获取当前的用户 GET /api/currentUser */
 export async function currentUser(options?: { [key: string]: any }) {
   return request<{
     data: API.CurrentUser;
   }>('/api/currentUser', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 获取当前的用户 菜单数据 */
+export async function menuData(options?: { [key: string]: any }) {
+  return request<Array<MenuDataItem>>('/api/user/getMenuData', {
     method: 'GET',
     ...(options || {}),
   });
