@@ -92,10 +92,10 @@ export const errorConfig: RequestConfig = {
   responseInterceptors: [
     (response) => {
       // 拦截响应数据，进行个性化处理
-      const { data } = response as unknown as ResponseStructure;
-      if (data?.success === false && !data?.showType) {
-        message.error('请求失败！');
-      }
+      // const { data } = response as unknown as ResponseStructure;
+      // if (data?.success === false && !data?.showType) {
+      //   message.error('请求失败！');
+      // }
       return response;
     },
   ],
