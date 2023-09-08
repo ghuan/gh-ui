@@ -34,6 +34,9 @@ const getURLParamValue = (paramName:string) => {
 const clientId = getURLParamValue('client_id');
 const scope = getURLParamValue('scope');
 const state = getURLParamValue('state');
+const redirectUri = getURLParamValue('redirect_uri');
+const principalName = getURLParamValue('principal_name');
+
 
 try{
   await checkConfirm({
@@ -92,6 +95,7 @@ const Confirm: React.FC = () => {
       <DeploymentUnitOutlined />
       <span>&nbsp;开放平台</span>
       <a className={'ant-pro-global-footer-list-link'} href={'https://github.com/ghuan'} style={{float:'right',marginRight:55,fontSize:12}}>技术支持</a>
+      <span style={{float:'right',marginRight:55,fontSize:13}}>{principalName}</span>
     </Header>
     <Content style={contentStyle}>
       <ProCard
@@ -115,10 +119,20 @@ const Confirm: React.FC = () => {
       bordered
       layout="center">
         授权后表明你已同意&emsp;<a className={'ant-pro-global-footer-list-link'} href={'https://github.com/ghuan'} style={{float:'right',fontSize:12}}>服务协议</a>
-               &emsp;<Button type="primary">授权</Button>
+               &emsp;<Button type="primary" onClick={() => {
+                document.getElementById('confirmationSubmit')?.click();
+               }}>授权</Button>
       </ProCard>
     </Content>
     <Footer></Footer>
+    <form  hidden={true} action="/oauth2/authorize" method='get'>
+      <input readOnly type="hidden" name="client_id" value={clientId}/>
+      <input readOnly type="hidden" name="state" value={state}/>
+      <input readOnly type="hidden" name="response_type" value="code"/>
+      <input readOnly type="hidden" name="redirect_uri" value={redirectUri}/>
+      <input readOnly type="hidden" name="scope" value={scope}/>
+      <button id={'confirmationSubmit'} type="submit"></button>
+      </form>
   </Layout>
   );
 };
