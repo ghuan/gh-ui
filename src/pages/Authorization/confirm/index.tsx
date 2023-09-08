@@ -14,11 +14,35 @@ import {
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { FormattedMessage, history, SelectLang, useIntl, useModel, Helmet } from '@umijs/max';
 import { Alert, message, Tabs } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { flushSync } from 'react-dom';
 
-const rs =  await checkConfirm();
-console.log(rs);
+const getURLParamValue = (paramName:string) => {
+  let url = window.location.href;
+  url = decodeURI(url);
+  var paramValue = "", isFound = !1;
+  if(url.indexOf("?") >= 0){
+    url = "?"+url.split('?')[1];
+    
+    if (url.indexOf("?") == 0 && url.indexOf("=") > 1) {
+      var arrSource = unescape(url).substring(1, url.length).split("&"), i = 0;
+      while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
+    }
+  }
+    return paramValue;
+}
+const clientId = getURLParamValue('client_id');
+const scope = getURLParamValue('scope');
+const state = getURLParamValue('state');
+
+try{
+  await checkConfirm({
+    skipErrorHandler: true,
+  })
+}catch(error){
+  window.location.href = '/token/confirm_access?client_id='+clientId+'&scope='+scope+'&state='+state
+  throw error;
+}
 
 const { Header, Content } = Layout;
 const headerStyle: React.CSSProperties = {
@@ -55,23 +79,7 @@ const Lang = () => {
 };
 
 const Confirm: React.FC = () => {
-  const getURLParamValue = (paramName:string) => {
-    let url = window.location.href;
-    url = decodeURI(url);
-    var paramValue = "", isFound = !1;
-    if(url.indexOf("?") >= 0){
-      url = "?"+url.split('?')[1];
-      
-      if (url.indexOf("?") == 0 && url.indexOf("=") > 1) {
-        var arrSource = unescape(url).substring(1, url.length).split("&"), i = 0;
-        while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
-      }
-    }
-      return paramValue;
-  }
-  const clientId = getURLParamValue('client_id');
-  const scope = getURLParamValue('scope');
-  const state = getURLParamValue('state');
+  
   return (
     <Layout>
       <Helmet>
