@@ -5,8 +5,8 @@ import { request } from '@umijs/max';
 export async function checkConfirm(
   options?: { [key: string]: any },
 ) {
-  return request<API.ApiResponse>('/api/token/checkConfirm', {
-    method: 'GET',
+  return request<API.ApiResponse>('/api/token/check_confirm', {
+    method: 'POST',
     ...(options || {}),
   });
 }

@@ -16,6 +16,10 @@ import { FormattedMessage, history, SelectLang, useIntl, useModel, Helmet } from
 import { Alert, message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
+
+const rs =  await checkConfirm();
+console.log(rs);
+
 const { Header, Content } = Layout;
 const headerStyle: React.CSSProperties = {
   color: '#777',
@@ -68,10 +72,13 @@ const Confirm: React.FC = () => {
   const clientId = getURLParamValue('client_id');
   const scope = getURLParamValue('scope');
   const state = getURLParamValue('state');
-  const rs =  checkConfirm();
-  console.log(rs);
   return (
     <Layout>
+      <Helmet>
+        <title>
+          GH用户认证授权
+        </title>
+      </Helmet>
     <Lang />
     <Header style={headerStyle}>
       <DeploymentUnitOutlined />

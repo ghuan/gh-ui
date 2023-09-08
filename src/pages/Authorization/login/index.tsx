@@ -13,8 +13,8 @@ import {
 } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { FormattedMessage, history, SelectLang, useIntl, useModel, Helmet } from '@umijs/max';
-import { Alert, message, Tabs } from 'antd';
-import React, { useState } from 'react';
+import { Alert, App, Tabs } from 'antd';
+import React, { useState,useEffect } from 'react';
 
 
 const Lang = () => {
@@ -42,6 +42,7 @@ const Lang = () => {
 const LoginMessage: React.FC<{
   content: string;
 }> = ({ content }) => {
+  
   return (
     <Alert
       style={{
@@ -53,30 +54,33 @@ const LoginMessage: React.FC<{
     />
   );
 };
+const getURLParamValue = (paramName:string) => {
+  let url = window.location.href;
+  url = decodeURI(url);
+  var paramValue = "", isFound = !1;
+  if(url.indexOf("?") >= 0){
+    url = "?"+url.split('?')[1];
+    
+    if (url.indexOf("?") == 0 && url.indexOf("=") > 1) {
+      var arrSource = unescape(url).substring(1, url.length).split("&"), i = 0;
+      while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
+    }
+  }
+    return paramValue;
+}
 
 const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>(localStorage.getItem('form_login_type') === 'phone' ? 'mobile' : 'account');
   const intl = useIntl();
-
-  const getURLParamValue = (paramName:string) => {
-    let url = window.location.href;
-    url = decodeURI(url);
-    var paramValue = "", isFound = !1;
-    if(url.indexOf("?") >= 0){
-      url = "?"+url.split('?')[1];
-      
-      if (url.indexOf("?") == 0 && url.indexOf("=") > 1) {
-        var arrSource = unescape(url).substring(1, url.length).split("&"), i = 0;
-        while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
-      }
-    }
-      return paramValue;
-  }
+  const { message } = App.useApp();
   const error = getURLParamValue('error');
-  if(error){
-    message.error(error);
-  }
+
+  useEffect(() => {
+    if (error) {
+      message.error(error);
+    }
+  }, [error]);
   const containerClassName = useEmotionCss(() => {
     return {
       display: 'flex',
