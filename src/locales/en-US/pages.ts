@@ -4,7 +4,7 @@ export default {
   'pages.search': 'Search',
   'pages.delete': 'Delete',
   'pages.layouts.userLayout.title':
-    'Gh Framework is the most influential web design specification in Xihu district',
+    'Please Login!',
   'pages.login.accountLogin.tab': 'Account Login',
   'pages.login.accountLogin.errorMessage': 'Incorrect username/password',
   'pages.login.failure': 'Login failed, please try again!',

@@ -3,7 +3,7 @@ export default {
   'pages.update': '修改',
   'pages.search': '查询',
   'pages.delete': '删除',
-  'pages.layouts.userLayout.title': '确认授权前，请先登陆!',
+  'pages.layouts.userLayout.title': '请先登陆!',
   'pages.login.accountLogin.tab': '账户密码登录',
   'pages.login.accountLogin.errorMessage': '错误的用户名和密码',
   'pages.login.failure': '登录失败，请重试！',
