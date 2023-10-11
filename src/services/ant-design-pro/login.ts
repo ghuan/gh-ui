@@ -11,8 +11,11 @@ export async function getFakeCaptcha(
   },
   options?: { [key: string]: any },
 ) {
-  return request<API.FakeCaptcha>('/api/login/captcha', {
+  return request<API.FakeCaptcha>('/token/send-sms-code', {
     method: 'GET',
+    headers: {
+      'from': 'Y'
+    },
     params: {
       ...params,
     },

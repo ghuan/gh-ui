@@ -14,7 +14,8 @@ import {
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { FormattedMessage, history, SelectLang, useIntl, useModel, Helmet } from '@umijs/max';
 import { Alert, App, Tabs } from 'antd';
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useRef } from 'react';
+import type { ProFormInstance } from '@ant-design/pro-components';
 
 
 const Lang = () => {
@@ -70,6 +71,8 @@ const getURLParamValue = (paramName:string) => {
 }
 
 const Login: React.FC = () => {
+  const formRef = useRef<ProFormInstance>();
+
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>(localStorage.getItem('form_login_type') === 'phone' ? 'mobile' : 'account');
   const intl = useIntl();
@@ -101,6 +104,7 @@ const Login: React.FC = () => {
     if(grant_type === 'phone'){
       localStorage.setItem("form_login_phone", values.mobile);
       document.getElementById('form_phone').value = values.mobile;
+      document.getElementById('form_sms_code').value = values.sms_code;
       document.getElementById('smsFormSubmit')?.click();
     }else {
       document.getElementById('form_username').value = values.username;
@@ -131,6 +135,7 @@ const Login: React.FC = () => {
             minWidth: 280,
             maxWidth: '75vw',
           }}
+          formRef={formRef}
           logo={<img alt="logo" src="/logo.svg" />}
           title="GH统一认证系统"
           subTitle={intl.formatMessage({ id: 'pages.layouts.userLayout.title' })}
@@ -261,6 +266,8 @@ const Login: React.FC = () => {
                 ]}
               />
               <ProFormCaptcha
+                phoneName={'mobile'}
+                countDown={10}
                 fieldProps={{
                   size: 'large',
                   prefix: <LockOutlined />,
@@ -284,7 +291,7 @@ const Login: React.FC = () => {
                     defaultMessage: '获取验证码',
                   });
                 }}
-                name="captcha"
+                name="sms_code"
                 rules={[
                   {
                     required: true,
@@ -297,13 +304,15 @@ const Login: React.FC = () => {
                   },
                 ]}
                 onGetCaptcha={async (phone) => {
+                  
                   const result = await getFakeCaptcha({
                     phone,
                   });
                   if (!result) {
                     return;
                   }
-                  message.success('获取验证码成功！验证码为：1234');
+                  message.success('获取验证码成功！');
+                  
                 }}
               />
             </>
@@ -322,6 +331,7 @@ const Login: React.FC = () => {
         <input readOnly type="text" name="client_id" value="gh"/>
         <input readOnly type="text" name="grant_type" value="sms"/>
         <input readOnly type="text" id="form_phone" name="phone"/>
+        <input readOnly type="text" id="form_sms_code" name="sms_code"/>
         <button id={'smsFormSubmit'} type="submit"></button>
       </form>
       <Footer />
