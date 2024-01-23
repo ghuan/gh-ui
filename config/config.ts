@@ -155,7 +155,6 @@ export default defineConfig({
   mfsu: {
     strategy: 'normal',
   },
-  esbuildMinifyIIFE: true,
   requestRecord: {},
   //开启多页签
   keepalive: [/./],
